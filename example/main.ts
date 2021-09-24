@@ -38,7 +38,7 @@ loadBtn.addEventListener('click', () => {
   function getPointCloudPath(url: string) {
     // FIXME: API point_cloud_data로 변경
     let root_path = "";
-    let token_query_string = ""
+    let token_query_string = "";
     return `${root_path}/${url}?${token_query_string}`;
   }
 
