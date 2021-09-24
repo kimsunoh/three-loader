@@ -34,17 +34,29 @@ loadBtn.addEventListener('click', () => {
   }
 
   loaded = true;
+  
+  function getPointCloudPath(url: string) {
+    // FIXME: API point_cloud_data로 변경
+    let root_path = "";
+    let token_query_string = ""
+    return `${root_path}/${url}?${token_query_string}`;
+  }
 
   viewer
     .load(
       'cloud.js',
-      'https://raw.githubusercontent.com/potree/potree/develop/pointclouds/lion_takanawa/',
+      getPointCloudPath,
     )
     .then(pco => {
       pointCloud = pco;
       pointCloud.rotateX(-Math.PI / 2);
       pointCloud.material.size = 1.0;
-
+      
+      if (pointCloud?.position) {
+        // 마커 도구 표시할 때 실제 좌표를 보여주기 위한 root offset 을 저장
+        pointCloud.position.copy(new Vector3(0, 0, 0));
+      }
+    
       const camera = viewer.camera;
       camera.far = 1000;
       camera.updateProjectionMatrix();
